@@ -1,0 +1,70 @@
+﻿<Page x:Class="BAMEX.View.Login"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      d:DesignHeight="600" d:DesignWidth="1080"
+      Title="Iniciar sesión" Background="White">
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0.1,0" EndPoint="0.9,1">
+                <GradientStop Color="#D22828" Offset="1" />
+                <GradientStop Color="#FF8D23" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Border Height="530" VerticalAlignment="Top" CornerRadius="0 0 180 0"
+                Background="#081025">
+        </Border>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="450">
+                <Image Source="/Utilities/Images/BamexLogo.png"
+                       VerticalAlignment="Bottom" Margin="40 120 40 30"/>
+            </StackPanel>
+            <StackPanel Width="650">
+                <StackPanel Margin="20 40">
+                    <TextBlock Text="L O G I N" Margin="20" Foreground="White"
+                               TextAlignment="Center" FontSize="60" FontFamily="Franklin Gothic" />
+                    <StackPanel Orientation="Horizontal" Margin="70 60 70 50" HorizontalAlignment="Center">
+                        <materialDesign:PackIcon Kind="User" Width="30" Height="30"
+                                                 Foreground="{Binding ElementName=UserTextBox, Path=BorderBrush}"/>
+                        <TextBox
+                            x:Name="UserTextBox" materialDesign:HintAssist.Hint="Usuario"
+                            materialDesign:HintAssist.HelperTextFontSize="20"
+                            Style="{DynamicResource TextBox}"
+                            Margin="10 0" Width="350">
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="70 0" HorizontalAlignment="Center">
+                        <materialDesign:PackIcon Kind="Password" Width="30" Height="30"
+                                                 Foreground="{Binding ElementName=PasswordTextBox, Path=BorderBrush}"/>
+                        <PasswordBox
+                            x:Name="PasswordTextBox" materialDesign:HintAssist.Hint="Contraseña"
+                            materialDesign:HintAssist.HelperTextFontSize="20"
+                            Style="{DynamicResource PasswordBox}"
+                            Margin="10 0" Width="350">
+                        </PasswordBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 60 0 0" HorizontalAlignment="Center">
+                        <Grid Width="350">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                x:Name="LoginButton"
+                                Style="{DynamicResource PrimaryButton }"
+                                Height="40"
+                                Content="Iniciar sesión"
+                                Click="LoginButton_Clicked"
+                                VerticalContentAlignment="Center" HorizontalAlignment="Center">
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

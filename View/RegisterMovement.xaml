@@ -1,0 +1,173 @@
+﻿<Page x:Class="BAMEX.View.RegisterMovement"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1080"
+      Title="Registrar movimiento" Background="#DBDBDB">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Border 
+            Grid.ColumnSpan="6" 
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch">
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0.1,0" EndPoint="0.9,1">
+                    <GradientStop Color="#D22828" Offset="1" />
+                    <GradientStop Color="#7E0000" Offset="0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <TextBlock 
+                Text="REGISTRAR MOVIMIENTO" 
+                HorizontalAlignment="Center"
+                Foreground="#FFFFFF"
+                FontWeight="Bold"
+                FontSize="40" 
+                VerticalAlignment="Center" 
+                Margin="0 10 0 10">
+            </TextBlock>
+        </Border>
+
+        <materialDesign:PackIcon
+            Kind="ArrowBackCircle"
+            Height="40" Width="45"
+            Foreground="#FFFF"
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center"
+            MouseLeftButtonDown="BackIcon_Clicked"/>
+
+        <materialDesign:ColorZone
+            Mode="Custom" 
+            Background="White" 
+            Grid.Row="1" Grid.ColumnSpan="6"
+            VerticalAlignment="Stretch" 
+            HorizontalAlignment="Stretch" 
+            Margin="20 20 20 20" 
+            CornerRadius="10" 
+            Height="470">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBox
+                    x:Name="ConceptTextBox" 
+                    materialDesign:HintAssist.Hint="Concepto del movimiento"
+                    Style="{DynamicResource TextBoxAlternativeBlack}"
+                    Grid.ColumnSpan="2"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    VerticalContentAlignment="Stretch" 
+                    HorizontalAlignment="Stretch"
+                    Height="50"
+                    Margin="0 20 0 0">
+                </TextBox>
+
+                <TextBox
+                    x:Name="AmountTextBox" 
+                    materialDesign:HintAssist.Hint="Cantidad"
+                    Style="{DynamicResource TextBoxAlternativeBlack}"
+                    Grid.Column="1" Grid.Row="2"
+                    VerticalContentAlignment="Stretch" 
+                    HorizontalAlignment="Left"
+                    Height="50"
+                    Width="220"
+                    Margin="5">
+                </TextBox>
+
+                <TextBox
+                    x:Name="DateTextBox" 
+                    materialDesign:HintAssist.Hint="Fecha"
+                    Style="{DynamicResource TextBoxAlternativeBlack}"
+                    Grid.Column="2" Grid.Row="2"
+                    VerticalContentAlignment="Stretch" 
+                    HorizontalAlignment="Left"
+                    Height="50"
+                    Width="220"
+                    Margin="5">
+                </TextBox>
+
+                <RadioButton
+                    x:Name="EntryRadioButton" 
+                    materialDesign:HintAssist.Hint="Cargo"
+                    Grid.Column="1" Grid.Row="3"
+                    VerticalContentAlignment="Center" 
+                    HorizontalAlignment="Left"
+                    Margin="90 0 0 0"
+                    Content="Ingreso"
+                    Foreground="Black"
+                    FontSize="16" 
+                    GroupName="CurrentJob" 
+                    Background="#D22828" IsChecked="True">
+                </RadioButton>
+
+                <RadioButton
+                    x:Name="EgressRadioButton" 
+                    Grid.Column="1" Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    VerticalContentAlignment="Center" 
+                    HorizontalAlignment="Center"
+                    Margin="0 0 0 0"
+                    Content="Egreso"
+                    Foreground="Black"
+                    FontSize="16" GroupName="CurrentJob" 
+                    Background="#D22828">
+                </RadioButton>
+
+                <RadioButton
+                    x:Name="PayRadioButton" 
+                    Grid.Column="2" Grid.Row="3"
+                    VerticalContentAlignment="Center" 
+                    HorizontalAlignment="Right"
+                    Margin="0 0 90 0"
+                    Content="Abono"
+                    Foreground="Black"
+                    FontSize="16" GroupName="CurrentJob" 
+                    Background="#D22828">
+                </RadioButton>
+
+                <Button
+                    x:Name="RegistButton"
+                    Style="{DynamicResource PrimaryButton}"
+                    Content="Registrar"
+                    Width="170"
+                    Grid.Column="1" Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                    VerticalContentAlignment="Center" 
+                    HorizontalAlignment="Center"
+                    Margin="10"
+                    Click="RegistButton_Clicked">
+                </Button>
+            </Grid>
+        </materialDesign:ColorZone>
+    </Grid>
+</Page>

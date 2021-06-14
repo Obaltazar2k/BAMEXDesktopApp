@@ -18,7 +18,7 @@ namespace BAMEX.Model
         public Nullable<System.DateTime> Fecha { get; set; }
         public int MovimientoID { get; set; }
         public string CajeroID { get; set; }
-        public Nullable<int> CuentaID { get; set; }
+        public string CuentaID { get; set; }
     
         public virtual Abono Abono { get; set; }
         public virtual Cajero Cajero { get; set; }

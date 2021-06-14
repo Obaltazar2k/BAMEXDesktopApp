@@ -24,7 +24,7 @@ namespace BAMEX.View
         private void ClientLogIn(object sender, RoutedEventArgs e)
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow?.ChangeView(new GenerateAccountStatement(new int())); // <- Mandar el número de cuenta con el que inicia sesión
+            mainWindow?.ChangeView(new GenerateAccountStatement("")); // <- Mandar el número de cuenta con el que inicia sesión
             return;
         }
     }

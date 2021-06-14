@@ -42,7 +42,7 @@ namespace BAMEX.View
                     {
                         using (BamexContext context = new BamexContext())
                         {
-                            var account = context.Cuenta.Find(int.Parse(AccountTextBox.Text.Replace(" ", string.Empty)));
+                            var account = context.Cuenta.Find(AccountTextBox.Text.Replace(" ", string.Empty));
                             var movement = new Movimiento
                             {
                                 Concepto = ConceptTextBox.Text,
@@ -115,7 +115,7 @@ namespace BAMEX.View
                 {
                     using (BamexContext context = new BamexContext())
                     {
-                        var client = context.Cuenta.Find(int.Parse(AccountTextBox.Text.Replace(" ", string.Empty)));
+                        var client = context.Cuenta.Find(AccountTextBox.Text.Replace(" ", string.Empty));
                         if (client != null)
                             return true;
                         else

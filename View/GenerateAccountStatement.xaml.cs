@@ -19,9 +19,9 @@ namespace BAMEX.View
     {
         private readonly DateTime thisDay = DateTime.Today;
         private ObservableCollection<AccountStatement> accountStatements;
-        private int account = 0;
+        private string account = null;
 
-        public GenerateAccountStatement(int numberAccount)
+        public GenerateAccountStatement(string numberAccount)
         {
             account = numberAccount;
             InitializeComponent();

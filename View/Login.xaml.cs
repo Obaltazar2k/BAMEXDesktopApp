@@ -19,5 +19,13 @@ namespace BAMEX.View
             mainWindow?.ChangeView(new MainMenu());
             return;
         }
+
+        // Cuando un cliente inicia sesión debe mandarlo directo a su estado de cuenta
+        private void ClientLogIn(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            mainWindow?.ChangeView(new GenerateAccountStatement(new int())); // <- Mandar el número de cuenta con el que inicia sesión
+            return;
+        }
     }
 }

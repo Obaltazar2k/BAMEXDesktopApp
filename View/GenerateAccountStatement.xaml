@@ -80,10 +80,11 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel 
-                    Width="220" Margin="30 0 0 0" 
+                    Width="220" Margin="30 10 0 0" 
                     HorizontalAlignment="Left">
                     <DatePicker
                         x:Name="dpInitialDate"
+                        SelectedDateChanged="dpInitialDate_SelectedDateChanged"
                         materialDesign:HintAssist.Hint="Fecha inicial de estado"
                         materialDesign:HintAssist.Foreground="#D22828"
                         materialDesign:HintAssist.IsFloating="True"
@@ -102,6 +103,7 @@
                     HorizontalAlignment="Left">
                     <DatePicker
                         x:Name="dpFinalDate"
+                        SelectedDateChanged="dpFinalDate_SelectedDateChanged"
                         materialDesign:HintAssist.Hint="Fecha final de estado"
                         materialDesign:HintAssist.Foreground="#D22828"
                         materialDesign:HintAssist.IsFloating="True"
@@ -130,15 +132,14 @@
                     HorizontalAlignment="Stretch"
                     IsReadOnly="True"
                     Margin="35 15"
-                    SelectionChanged="MovementsList_SelectionChanged"
                     SelectionMode="Single"
                     VerticalAlignment="Stretch"
                     x:Name="MovementsList">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Fecha" IsReadOnly="True" Width="*" Binding="{Binding Fecha}" />
-                        <DataGridTextColumn Header="Ingreso/Egreso" IsReadOnly="True" Width="*" Binding="{Binding IngresoEgreso}" />
-                        <DataGridTextColumn Header="Cantidad" IsReadOnly="True" Width="*" Binding="{Binding Cantidad}" />
-                        <DataGridTextColumn Header="Descripción" IsReadOnly="True" Width="*" Binding="{Binding Descripcion}" />
+                        <DataGridTextColumn Header="Tipo de movimiento" IsReadOnly="True" Width="*" Binding="{Binding TipoDeMovimiento}" />
+                        <DataGridTextColumn Header="Cantidad" IsReadOnly="True" Width="*" Binding="{Binding Monto}" />
+                        <DataGridTextColumn Header="Descripción" IsReadOnly="True" Width="*" Binding="{Binding Concepto}" />
                     </DataGrid.Columns>
                     <DataGrid.Resources>
                         <Style TargetType="DataGridCell">

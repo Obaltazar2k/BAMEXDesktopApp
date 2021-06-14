@@ -27,13 +27,6 @@ namespace BAMEX.View
             return;
         }
 
-        private void GenerateStateAccountButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow?.ChangeView(new GenerateAccountStatement());
-            return;
-        }
-
         private void ConsultAccountsButton_Clicked(object sender, RoutedEventArgs e)
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;

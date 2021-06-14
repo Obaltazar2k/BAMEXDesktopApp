@@ -20,7 +20,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="auto"/>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -73,6 +73,7 @@
         </Button>
 
         <Button
+            Visibility="Collapsed"
             x:Name="GenerateStateAccountButton"
             Style="{DynamicResource PrimaryButton}"
             Content="Generar estado de cuenta"
@@ -81,8 +82,7 @@
             Grid.ColumnSpan="2"
             VerticalContentAlignment="Center" 
             HorizontalAlignment="Center"
-            Margin="10"
-            Click="GenerateStateAccountButton_Clicked">
+            Margin="10">
         </Button>
 
         <Button

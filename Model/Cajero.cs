@@ -10,14 +10,14 @@
 namespace BAMEX.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class Cajero
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cajero()
         {
-            this.Movimiento = new HashSet<Movimiento>();
+            this.Movimiento = new ObservableCollection<Movimiento>();
         }
     
         public string Apellidos { get; set; }
@@ -26,6 +26,6 @@ namespace BAMEX.Model
         public string CajeroID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Movimiento> Movimiento { get; set; }
+        public virtual ObservableCollection<Movimiento> Movimiento { get; set; }
     }
 }

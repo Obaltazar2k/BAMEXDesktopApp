@@ -117,6 +117,7 @@
     <Compile Include="Model\Tarjeta.cs">
       <DependentUpon>BamexModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\AccountStatement.cs" />
     <Compile Include="Utilities\Encrypt.cs" />
     <Compile Include="Utilities\FieldsVerificator.cs" />
     <Compile Include="Utilities\Sesion.cs" />

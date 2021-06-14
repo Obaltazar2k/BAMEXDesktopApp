@@ -137,5 +137,13 @@ namespace BAMEX.View
                 CustomMessageBox.Show("Ah sobrepasado el numero de intentos disponibles, intente mas tarde");
             }
         }
+
+        // Cuando un cliente inicia sesión debe mandarlo directo a su estado de cuenta
+        private void ClientLogIn(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            mainWindow?.ChangeView(new GenerateAccountStatement(new int())); // <- Mandar el número de cuenta con el que inicia sesión
+            return;
+        }
     }
 }

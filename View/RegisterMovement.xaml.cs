@@ -42,10 +42,12 @@ namespace BAMEX.View
                     {
                         using (BamexContext context = new BamexContext())
                         {
+                            var account = context.Cuenta.Find(int.Parse(AccountTextBox.Text.Replace(" ", string.Empty)));
                             var movement = new Movimiento
                             {
                                 Concepto = ConceptTextBox.Text,
-                                Fecha = thisDay//,
+                                Fecha = thisDay,
+                                Cuenta = account//,
                                 //Cajero = Session.User
                             };
                             if ((bool)EntryRadioButton.IsChecked)
@@ -55,6 +57,7 @@ namespace BAMEX.View
                                     Monto = double.Parse(AmountTextBox.Text),
                                     Movimiento = movement
                                 };
+                                account.Saldo += movement.Cargo.Monto;
                             }
                             else if ((bool)PayRadioButton.IsChecked)
                             {
@@ -63,12 +66,16 @@ namespace BAMEX.View
                                     Monto = double.Parse(AmountTextBox.Text),
                                     Movimiento = movement
                                 };
+                                account.Saldo += movement.Abono.Monto;
                             }
                             else if ((bool)EgressRadioButton.IsChecked)
                             {
                                 throw new NotImplementedException();
                             }
+
+                            context.Movimiento.Add(movement);
                             context.SaveChanges();
+
                             CustomMessageBox.ShowOK("Se ha registrado el movimiento con éxito", "Éxito", "Aceptar");
                         }
                     }

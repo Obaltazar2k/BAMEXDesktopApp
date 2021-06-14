@@ -10,7 +10,7 @@
 namespace BAMEX.Model
 {
     using System;
-    using System.Collections.ObjectModel;
+    using System.Collections.Generic;
     
     public partial class Tarjeta
     {
@@ -18,8 +18,8 @@ namespace BAMEX.Model
         public string Nombreentarjeta { get; set; }
         public Nullable<int> Numtarjeta { get; set; }
         public Nullable<int> Pincode { get; set; }
-        public int TarjetaID { get; set; }
-        public int CuentaID { get; set; }
+        public string TarjetaID { get; set; }
+        public string CuentaID { get; set; }
     
         public virtual Cuenta Cuenta { get; set; }
     }

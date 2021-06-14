@@ -71,6 +71,7 @@ namespace BAMEX.View
                             else if ((bool)EgressRadioButton.IsChecked)
                             {
                                 throw new NotImplementedException();
+                                //account.Saldo -= movement.Egreso.Monto;
                             }
 
                             context.Movimiento.Add(movement);

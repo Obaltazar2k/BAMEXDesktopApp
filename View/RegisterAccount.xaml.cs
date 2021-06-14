@@ -1,4 +1,7 @@
-﻿using BAMEX.Utilities;
+﻿using BAMEX.Model;
+using BAMEX.Utilities;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,6 +14,8 @@ namespace BAMEX.View
     /// </summary>
     public partial class RegisterAccount : Page
     {
+        string accounNumber = "";
+        string cardNumber = "5579";
         public RegisterAccount()
         {
             InitializeComponent();
@@ -52,6 +57,33 @@ namespace BAMEX.View
                 && FieldsVerificator.VerificateString(CityTextBox.Text, "Ciudad/Municipio")
                 && FieldsVerificator.VerificateDate(dpCutDate.Text, "Fecha de corte")
                 && FieldsVerificator.VerificateDate(dpExpirationDate.Text, "Fecha de expiración");
+        }
+
+        private string GenerateNumber(string number, int range)
+        {
+            Random aleatorio = new Random();
+            for(int i = 0; i < range; i++)
+            {
+                number = number + aleatorio.Next(0, 10).ToString();
+            }
+
+            return number;
+        }
+
+        private void fillTextBoxes()
+        {
+            string account;
+            string card;
+            bool acceptedAccount = false;
+            bool acceptedCard = false;
+            using (BamexContext context = new BamexContext())
+            {
+                do
+                {
+                    account = GenerateNumber(accounNumber, 20);
+                    var client = context.Cliente.FirstOrDefault(c => c);
+                } while (acceptedAccount != true);
+            }
         }
     }
 }

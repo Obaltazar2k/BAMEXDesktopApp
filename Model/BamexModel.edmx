@@ -46,7 +46,7 @@
           <Property Name="Fechacorte" Type="date" />
           <Property Name="Montoinicial" Type="float" />
           <Property Name="Saldo" Type="float" />
-          <Property Name="CuentaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CuentaID" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ClienteID" Type="varchar" MaxLength="100" />
           <Property Name="GerenteID" Type="varchar" MaxLength="100" />
         </EntityType>
@@ -67,7 +67,7 @@
           <Property Name="Fecha" Type="date" />
           <Property Name="MovimientoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CajeroID" Type="varchar" MaxLength="100" />
-          <Property Name="CuentaID" Type="int" />
+          <Property Name="CuentaID" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tarjeta">
           <Key>
@@ -77,8 +77,8 @@
           <Property Name="Nombreentarjeta" Type="varchar" MaxLength="150" />
           <Property Name="Numtarjeta" Type="int" />
           <Property Name="Pincode" Type="int" />
-          <Property Name="TarjetaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CuentaID" Type="int" Nullable="false" />
+          <Property Name="TarjetaID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CuentaID" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="FK_Abono_Movimiento">
           <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="1" />
@@ -252,7 +252,7 @@
           <Property Name="Fechacorte" Type="DateTime" Precision="0" />
           <Property Name="Montoinicial" Type="Double" />
           <Property Name="Saldo" Type="Double" />
-          <Property Name="CuentaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CuentaID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ClienteID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="GerenteID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK_Cuenta_Tiene" FromRole="Cuenta" ToRole="Cliente" />
@@ -278,7 +278,7 @@
           <Property Name="Fecha" Type="DateTime" Precision="0" />
           <Property Name="MovimientoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CajeroID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CuentaID" Type="Int32" />
+          <Property Name="CuentaID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Abono" Relationship="Self.FK_Abono_Movimiento" FromRole="Movimiento" ToRole="Abono" />
           <NavigationProperty Name="Cajero" Relationship="Self.FK_Movimiento_Realiza" FromRole="Movimiento" ToRole="Cajero" />
           <NavigationProperty Name="Cargo" Relationship="Self.FK_Cargo_Movimiento" FromRole="Movimiento" ToRole="Cargo" />
@@ -292,8 +292,8 @@
           <Property Name="Nombreentarjeta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Numtarjeta" Type="Int32" />
           <Property Name="Pincode" Type="Int32" />
-          <Property Name="TarjetaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CuentaID" Type="Int32" Nullable="false" />
+          <Property Name="TarjetaID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CuentaID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cuenta" Relationship="Self.FK_Tarjeta_Cuenta" FromRole="Tarjeta" ToRole="Cuenta" />
         </EntityType>
         <Association Name="FK_Abono_Movimiento">

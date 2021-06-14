@@ -220,8 +220,8 @@
     <Content Include="Database script\DDL.sql" />
     <Content Include="Model\BamexModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BamexModel.Context.cs</LastGenOutput>
       <DependentUpon>BamexModel.edmx</DependentUpon>
+      <LastGenOutput>BamexModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Model\BamexModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

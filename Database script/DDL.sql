@@ -109,7 +109,7 @@ CREATE TABLE [Cuenta]
 	[Fechacorte] date NULL,
 	[Montoinicial] float NULL,
 	[Saldo] float NULL,
-	[CuentaID] int NOT NULL IDENTITY (1, 1),
+	[CuentaID] varchar(50) NOT NULL,
 	[ClienteID] varchar(100) NULL,
 	[GerenteID] varchar(100) NULL
 )
@@ -130,7 +130,7 @@ CREATE TABLE [Movimiento]
 	[Fecha] date NULL,
 	[MovimientoID] int NOT NULL IDENTITY (1, 1),
 	[CajeroID] varchar(100) NULL,
-	[CuentaID] int NULL
+	[CuentaID] varchar(50) NULL
 )
 GO
 
@@ -140,8 +140,8 @@ CREATE TABLE [Tarjeta]
 	[Nombreentarjeta] varchar (150) NULL,
 	[Numtarjeta] int NULL,
 	[Pincode] int NULL,
-	[TarjetaID] int NOT NULL IDENTITY (1, 1),
-	[CuentaID] int NOT NULL
+	[TarjetaID] varchar(50) NOT NULL,
+	[CuentaID] varchar(50) NULL
 )
 GO
 

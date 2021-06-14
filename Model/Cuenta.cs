@@ -24,7 +24,7 @@ namespace BAMEX.Model
         public Nullable<System.DateTime> Fechacorte { get; set; }
         public Nullable<double> Montoinicial { get; set; }
         public Nullable<double> Saldo { get; set; }
-        public int CuentaID { get; set; }
+        public string CuentaID { get; set; }
         public string ClienteID { get; set; }
         public string GerenteID { get; set; }
     

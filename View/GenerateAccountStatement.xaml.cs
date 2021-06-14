@@ -106,15 +106,20 @@ namespace BAMEX.View
 
         private void dpInitialDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            accountStatements.Clear();
-            GetMovements();
-
+            if (FieldsVerificator.VerificateDate(dpInitialDate.Text, "Fecha"))
+            {
+                accountStatements.Clear();
+                GetMovements();
+            }
         }
 
         private void dpFinalDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            accountStatements.Clear();
-            GetMovements();
+            if (FieldsVerificator.VerificateDate(dpFinalDate.Text, "Fecha"))
+            {
+                accountStatements.Clear();
+                GetMovements();
+            }
         }
     }
 }

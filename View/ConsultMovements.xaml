@@ -79,10 +79,32 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel 
+                <Border x:Name="BorderBlurr" Grid.ColumnSpan="10" Grid.RowSpan="10" >
+                    <Border.Effect>
+                        <BlurEffect x:Name="BlurEffect" Radius="10" KernelType="Gaussian"/>
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+
+                        <StackPanel 
                     Width="220" Margin="30 10 0 0" 
                     HorizontalAlignment="Left">
-                    <DatePicker
+                            <DatePicker
                         x:Name="dpSearchDate"
                         materialDesign:HintAssist.Hint="Búsqueda por fecha"
                         materialDesign:HintAssist.Foreground="#D22828"
@@ -90,13 +112,13 @@
                         Foreground="Black"
                         BorderBrush="#B5B4B4"
                         Height="50">
-                        <DatePicker.Resources>
-                            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#D22828" />
-                        </DatePicker.Resources>
-                    </DatePicker>
-                </StackPanel>
+                                <DatePicker.Resources>
+                                    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#D22828" />
+                                </DatePicker.Resources>
+                            </DatePicker>
+                        </StackPanel>
 
-                <DataGrid 
+                        <DataGrid 
                     AutoGenerateColumns = "False" 
                     BorderThickness="3"
                     CanUserAddRows="False" 
@@ -116,32 +138,32 @@
                     SelectionMode="Single"
                     VerticalAlignment="Stretch"
                     x:Name="MovementsList">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Fecha" IsReadOnly="True" Width="*" Binding="{Binding Fecha}" />
-                        <DataGridTextColumn Header="Ingreso/Egreso" IsReadOnly="True" Width="*" Binding="{Binding IngresoEgreso}" />
-                        <DataGridTextColumn Header="Cantidad" IsReadOnly="True" Width="*" Binding="{Binding Cantidad}" />
-                        <DataGridTextColumn Header="Descripción" IsReadOnly="True" Width="*" Binding="{Binding Descripcion}" />
-                    </DataGrid.Columns>
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridCell">
-                            <Style.Triggers>
-                                <Trigger Property="IsReadOnly" Value="True">
-                                    <Setter Property="IsTabStop" Value="False" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                        <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="#D22828" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#D22828" />
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
-                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#04539c" />
-                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
-                    </DataGrid.Resources>
-                </DataGrid>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Fecha" IsReadOnly="True" Width="*" Binding="{Binding Fecha}" />
+                                <DataGridTextColumn Header="Ingreso/Egreso" IsReadOnly="True" Width="*" Binding="{Binding IngresoEgreso}" />
+                                <DataGridTextColumn Header="Cantidad" IsReadOnly="True" Width="*" Binding="{Binding Cantidad}" />
+                                <DataGridTextColumn Header="Descripción" IsReadOnly="True" Width="*" Binding="{Binding Descripcion}" />
+                            </DataGrid.Columns>
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridCell">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsReadOnly" Value="True">
+                                            <Setter Property="IsTabStop" Value="False" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="#D22828" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#D22828" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#04539c" />
+                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
+                            </DataGrid.Resources>
+                        </DataGrid>
 
-                <Button
+                        <Button
                     x:Name="ConsutlDetailsButton"
                     Style="{DynamicResource PrimaryButton}"
                     Content="Consultar detalles"
@@ -152,6 +174,41 @@
                     HorizontalAlignment="Center"
                     Margin="10"
                     Click="ConsutlDetailsButton_Clicked">
+                        </Button>
+
+                    </Grid>
+                </Border>
+
+                <TextBox
+                    x:Name="AccountTextBox" 
+                    materialDesign:HintAssist.Hint="Número de cuenta"
+                    Style="{DynamicResource TextBoxAlternativeBlack}"
+                    Grid.ColumnSpan="2"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Grid.RowSpan="2"
+                    FontSize="20"
+                    KeyDown="AccountTextBox_KeyDown"
+                    VerticalContentAlignment="Bottom" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    >
+                </TextBox>
+
+                <Button
+                    x:Name="ConsutlMovementsButton"
+                    Style="{DynamicResource PrimaryButton}"
+                    Content="Consultar movimientos"
+                    Width="auto"
+                    Height="auto"
+                    Grid.Column="1" Grid.Row="3"
+                    
+                    Grid.ColumnSpan="2"
+                    FontSize="20"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center"
+                    Margin="10"
+                    Click="ConsutlMovementsButton_Click">
                 </Button>
             </Grid>
         </materialDesign:ColorZone>

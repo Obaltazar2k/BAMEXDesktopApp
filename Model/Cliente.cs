@@ -10,14 +10,14 @@
 namespace BAMEX.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class Cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cliente()
         {
-            this.Cuenta = new HashSet<Cuenta>();
+            this.Cuenta = new ObservableCollection<Cuenta>();
         }
     
         public string Apellidos { get; set; }
@@ -27,6 +27,6 @@ namespace BAMEX.Model
         public string ClienteID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cuenta> Cuenta { get; set; }
+        public virtual ObservableCollection<Cuenta> Cuenta { get; set; }
     }
 }

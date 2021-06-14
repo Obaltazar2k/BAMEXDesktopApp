@@ -10,15 +10,15 @@
 namespace BAMEX.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class Cuenta
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cuenta()
         {
-            this.Movimiento = new HashSet<Movimiento>();
-            this.Tarjeta = new HashSet<Tarjeta>();
+            this.Movimiento = new ObservableCollection<Movimiento>();
+            this.Tarjeta = new ObservableCollection<Tarjeta>();
         }
     
         public Nullable<System.DateTime> Fechacorte { get; set; }
@@ -31,8 +31,8 @@ namespace BAMEX.Model
         public virtual Cliente Cliente { get; set; }
         public virtual Gerente Gerente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Movimiento> Movimiento { get; set; }
+        public virtual ObservableCollection<Movimiento> Movimiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tarjeta> Tarjeta { get; set; }
+        public virtual ObservableCollection<Tarjeta> Tarjeta { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace BAMEX.View
 
         private void ConsutlDetailsButton_Clicked(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
 
         private void MovementsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -141,6 +141,15 @@ namespace BAMEX.View
                 e.Handled = false;
             else
                 e.Handled = true;
+        }
+
+        private void dpSearchDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (FieldsVerificator.VerificateDate(dpSearchDate.Text, "Fecha"))
+            {
+                accountStatements.Clear();
+                GetMovements();
+            }
         }
     }
 }

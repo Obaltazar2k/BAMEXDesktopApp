@@ -15,10 +15,11 @@ namespace BAMEX.View
     public partial class RegisterAccount : Page
     {
         string accounNumber = "";
-        string cardNumber = "5579";
+        string cardNumber = "";
         public RegisterAccount()
         {
             InitializeComponent();
+            fillTextBoxes();
         }
 
         private void BackIcon_Clicked(object sender, RoutedEventArgs e)
@@ -59,8 +60,9 @@ namespace BAMEX.View
                 && FieldsVerificator.VerificateDate(dpExpirationDate.Text, "Fecha de expiración");
         }
 
-        private string GenerateNumber(string number, int range)
+        private string GenerateNumber(int range)
         {
+            string number = "";
             Random aleatorio = new Random();
             for(int i = 0; i < range; i++)
             {
@@ -71,19 +73,37 @@ namespace BAMEX.View
         }
 
         private void fillTextBoxes()
-        {
-            string account;
-            string card;
+        {;
             bool acceptedAccount = false;
             bool acceptedCard = false;
             using (BamexContext context = new BamexContext())
             {
                 do
                 {
-                    account = GenerateNumber(accounNumber, 20);
-                    var client = context.Cliente.FirstOrDefault(c => c);
+                    accounNumber = GenerateNumber(20);
+                    int resultAccount = Int32.Parse(accounNumber);
+                    var retrievedAccount = context.Cuenta.FirstOrDefault(c => c.CuentaID == resultAccount);
+                    if (retrievedAccount == null)
+                    {
+                        acceptedAccount = true;
+                    }
+
                 } while (acceptedAccount != true);
+
+                do
+                {
+                    cardNumber = "5579" + GenerateNumber(12);
+                    int resultCard = Int32.Parse(accounNumber);
+                    var retrievedCard = context.Tarjeta.FirstOrDefault(t => t.TarjetaID == resultCard);
+                    if (retrievedCard == null)
+                    {
+                        acceptedCard = true;
+                    }
+                } while (acceptedCard != true);
             }
+
+            AccountNumberTextBox.Text = accounNumber;
+            CardNumberTextBox.Text = cardNumber;
         }
     }
 }

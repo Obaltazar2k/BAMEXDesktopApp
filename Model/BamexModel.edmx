@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BamexModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Abono">
+          <Key>
+            <PropertyRef Name="AbonoID" />
+          </Key>
+          <Property Name="Monto" Type="float" />
+          <Property Name="AbonoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cajero">
+          <Key>
+            <PropertyRef Name="CajeroID" />
+          </Key>
+          <Property Name="Apellidos" Type="varchar" MaxLength="100" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Contrasenia" Type="varchar" MaxLength="150" />
+          <Property Name="CajeroID" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="CargoID" />
+          </Key>
+          <Property Name="Interes" Type="float" />
+          <Property Name="Monto" Type="float" />
+          <Property Name="CargoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="Apellidos" Type="varchar" MaxLength="100" />
+          <Property Name="Dirección" Type="varchar" MaxLength="200" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Contrasenia" Type="varchar" MaxLength="150" />
+          <Property Name="ClienteID" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cuenta">
+          <Key>
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="Fechacorte" Type="date" />
+          <Property Name="Montoinicial" Type="float" />
+          <Property Name="Saldo" Type="float" />
+          <Property Name="CuentaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteID" Type="varchar" MaxLength="100" />
+          <Property Name="GerenteID" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Gerente">
+          <Key>
+            <PropertyRef Name="GerenteID" />
+          </Key>
+          <Property Name="Apellidos" Type="varchar" MaxLength="100" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Contrasenia" Type="varchar" MaxLength="150" />
+          <Property Name="GerenteID" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movimiento">
+          <Key>
+            <PropertyRef Name="MovimientoID" />
+          </Key>
+          <Property Name="Concepto" Type="varchar" MaxLength="100" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="MovimientoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CajeroID" Type="varchar" MaxLength="100" />
+          <Property Name="CuentaID" Type="int" />
+        </EntityType>
+        <EntityType Name="Tarjeta">
+          <Key>
+            <PropertyRef Name="TarjetaID" />
+          </Key>
+          <Property Name="Fechaexpiracion" Type="date" />
+          <Property Name="Nombreentarjeta" Type="varchar" MaxLength="150" />
+          <Property Name="Numtarjeta" Type="int" />
+          <Property Name="Pincode" Type="int" />
+          <Property Name="TarjetaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CuentaID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Abono_Movimiento">
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="1" />
+          <End Role="Abono" Type="Self.Abono" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movimiento">
+              <PropertyRef Name="MovimientoID" />
+            </Principal>
+            <Dependent Role="Abono">
+              <PropertyRef Name="AbonoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cargo_Movimiento">
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movimiento">
+              <PropertyRef Name="MovimientoID" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="CargoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cuenta_Apertura">
+          <End Role="Gerente" Type="Self.Gerente" Multiplicity="0..1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gerente">
+              <PropertyRef Name="GerenteID" />
+            </Principal>
+            <Dependent Role="Cuenta">
+              <PropertyRef Name="GerenteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cuenta_Tiene">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Cuenta">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Realiza">
+          <End Role="Cajero" Type="Self.Cajero" Multiplicity="0..1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cajero">
+              <PropertyRef Name="CajeroID" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="CajeroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Tiene">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="0..1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="CuentaID" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="CuentaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tarjeta_Cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Tarjeta" Type="Self.Tarjeta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="CuentaID" />
+            </Principal>
+            <Dependent Role="Tarjeta">
+              <PropertyRef Name="CuentaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BamexModelStoreContainer">
+          <EntitySet Name="Abono" EntityType="Self.Abono" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cajero" EntityType="Self.Cajero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cuenta" EntityType="Self.Cuenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gerente" EntityType="Self.Gerente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movimiento" EntityType="Self.Movimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tarjeta" EntityType="Self.Tarjeta" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Abono_Movimiento" Association="Self.FK_Abono_Movimiento">
+            <End Role="Movimiento" EntitySet="Movimiento" />
+            <End Role="Abono" EntitySet="Abono" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cargo_Movimiento" Association="Self.FK_Cargo_Movimiento">
+            <End Role="Movimiento" EntitySet="Movimiento" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cuenta_Apertura" Association="Self.FK_Cuenta_Apertura">
+            <End Role="Gerente" EntitySet="Gerente" />
+            <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cuenta_Tiene" Association="Self.FK_Cuenta_Tiene">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Realiza" Association="Self.FK_Movimiento_Realiza">
+            <End Role="Cajero" EntitySet="Cajero" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Tiene" Association="Self.FK_Movimiento_Tiene">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tarjeta_Cuenta" Association="Self.FK_Tarjeta_Cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Tarjeta" EntitySet="Tarjeta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BamexModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Abono">
+          <Key>
+            <PropertyRef Name="AbonoID" />
+          </Key>
+          <Property Name="Monto" Type="Double" />
+          <Property Name="AbonoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Movimiento" Relationship="Self.FK_Abono_Movimiento" FromRole="Abono" ToRole="Movimiento" />
+        </EntityType>
+        <EntityType Name="Cajero">
+          <Key>
+            <PropertyRef Name="CajeroID" />
+          </Key>
+          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contrasenia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CajeroID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Movimiento" Relationship="Self.FK_Movimiento_Realiza" FromRole="Cajero" ToRole="Movimiento" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="CargoID" />
+          </Key>
+          <Property Name="Interes" Type="Double" />
+          <Property Name="Monto" Type="Double" />
+          <Property Name="CargoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Movimiento" Relationship="Self.FK_Cargo_Movimiento" FromRole="Cargo" ToRole="Movimiento" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Dirección" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contrasenia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ClienteID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cuenta" Relationship="Self.FK_Cuenta_Tiene" FromRole="Cliente" ToRole="Cuenta" />
+        </EntityType>
+        <EntityType Name="Cuenta">
+          <Key>
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="Fechacorte" Type="DateTime" Precision="0" />
+          <Property Name="Montoinicial" Type="Double" />
+          <Property Name="Saldo" Type="Double" />
+          <Property Name="CuentaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GerenteID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cuenta_Tiene" FromRole="Cuenta" ToRole="Cliente" />
+          <NavigationProperty Name="Gerente" Relationship="Self.FK_Cuenta_Apertura" FromRole="Cuenta" ToRole="Gerente" />
+          <NavigationProperty Name="Movimiento" Relationship="Self.FK_Movimiento_Tiene" FromRole="Cuenta" ToRole="Movimiento" />
+          <NavigationProperty Name="Tarjeta" Relationship="Self.FK_Tarjeta_Cuenta" FromRole="Cuenta" ToRole="Tarjeta" />
+        </EntityType>
+        <EntityType Name="Gerente">
+          <Key>
+            <PropertyRef Name="GerenteID" />
+          </Key>
+          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contrasenia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="GerenteID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cuenta" Relationship="Self.FK_Cuenta_Apertura" FromRole="Gerente" ToRole="Cuenta" />
+        </EntityType>
+        <EntityType Name="Movimiento">
+          <Key>
+            <PropertyRef Name="MovimientoID" />
+          </Key>
+          <Property Name="Concepto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="MovimientoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CajeroID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CuentaID" Type="Int32" />
+          <NavigationProperty Name="Abono" Relationship="Self.FK_Abono_Movimiento" FromRole="Movimiento" ToRole="Abono" />
+          <NavigationProperty Name="Cajero" Relationship="Self.FK_Movimiento_Realiza" FromRole="Movimiento" ToRole="Cajero" />
+          <NavigationProperty Name="Cargo" Relationship="Self.FK_Cargo_Movimiento" FromRole="Movimiento" ToRole="Cargo" />
+          <NavigationProperty Name="Cuenta" Relationship="Self.FK_Movimiento_Tiene" FromRole="Movimiento" ToRole="Cuenta" />
+        </EntityType>
+        <EntityType Name="Tarjeta">
+          <Key>
+            <PropertyRef Name="TarjetaID" />
+          </Key>
+          <Property Name="Fechaexpiracion" Type="DateTime" Precision="0" />
+          <Property Name="Nombreentarjeta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Numtarjeta" Type="Int32" />
+          <Property Name="Pincode" Type="Int32" />
+          <Property Name="TarjetaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CuentaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cuenta" Relationship="Self.FK_Tarjeta_Cuenta" FromRole="Tarjeta" ToRole="Cuenta" />
+        </EntityType>
+        <Association Name="FK_Abono_Movimiento">
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="1" />
+          <End Role="Abono" Type="Self.Abono" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movimiento">
+              <PropertyRef Name="MovimientoID" />
+            </Principal>
+            <Dependent Role="Abono">
+              <PropertyRef Name="AbonoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Realiza">
+          <End Role="Cajero" Type="Self.Cajero" Multiplicity="0..1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cajero">
+              <PropertyRef Name="CajeroID" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="CajeroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cargo_Movimiento">
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movimiento">
+              <PropertyRef Name="MovimientoID" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="CargoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cuenta_Tiene">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Cuenta">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cuenta_Apertura">
+          <End Role="Gerente" Type="Self.Gerente" Multiplicity="0..1" />
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gerente">
+              <PropertyRef Name="GerenteID" />
+            </Principal>
+            <Dependent Role="Cuenta">
+              <PropertyRef Name="GerenteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Tiene">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="0..1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="CuentaID" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="CuentaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tarjeta_Cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Tarjeta" Type="Self.Tarjeta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="CuentaID" />
+            </Principal>
+            <Dependent Role="Tarjeta">
+              <PropertyRef Name="CuentaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BamexContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Abono" EntityType="Self.Abono" />
+          <EntitySet Name="Cajero" EntityType="Self.Cajero" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Cuenta" EntityType="Self.Cuenta" />
+          <EntitySet Name="Gerente" EntityType="Self.Gerente" />
+          <EntitySet Name="Movimiento" EntityType="Self.Movimiento" />
+          <EntitySet Name="Tarjeta" EntityType="Self.Tarjeta" />
+          <AssociationSet Name="FK_Abono_Movimiento" Association="Self.FK_Abono_Movimiento">
+            <End Role="Movimiento" EntitySet="Movimiento" />
+            <End Role="Abono" EntitySet="Abono" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Realiza" Association="Self.FK_Movimiento_Realiza">
+            <End Role="Cajero" EntitySet="Cajero" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cargo_Movimiento" Association="Self.FK_Cargo_Movimiento">
+            <End Role="Movimiento" EntitySet="Movimiento" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cuenta_Tiene" Association="Self.FK_Cuenta_Tiene">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cuenta_Apertura" Association="Self.FK_Cuenta_Apertura">
+            <End Role="Gerente" EntitySet="Gerente" />
+            <End Role="Cuenta" EntitySet="Cuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Tiene" Association="Self.FK_Movimiento_Tiene">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tarjeta_Cuenta" Association="Self.FK_Tarjeta_Cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Tarjeta" EntitySet="Tarjeta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BamexModelStoreContainer" CdmEntityContainer="BamexContext">
+          <EntitySetMapping Name="Abono">
+            <EntityTypeMapping TypeName="BamexModel.Abono">
+              <MappingFragment StoreEntitySet="Abono">
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="AbonoID" ColumnName="AbonoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cajero">
+            <EntityTypeMapping TypeName="BamexModel.Cajero">
+              <MappingFragment StoreEntitySet="Cajero">
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+                <ScalarProperty Name="CajeroID" ColumnName="CajeroID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargo">
+            <EntityTypeMapping TypeName="BamexModel.Cargo">
+              <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="Interes" ColumnName="Interes" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="CargoID" ColumnName="CargoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="BamexModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cuenta">
+            <EntityTypeMapping TypeName="BamexModel.Cuenta">
+              <MappingFragment StoreEntitySet="Cuenta">
+                <ScalarProperty Name="Fechacorte" ColumnName="Fechacorte" />
+                <ScalarProperty Name="Montoinicial" ColumnName="Montoinicial" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="GerenteID" ColumnName="GerenteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gerente">
+            <EntityTypeMapping TypeName="BamexModel.Gerente">
+              <MappingFragment StoreEntitySet="Gerente">
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+                <ScalarProperty Name="GerenteID" ColumnName="GerenteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movimiento">
+            <EntityTypeMapping TypeName="BamexModel.Movimiento">
+              <MappingFragment StoreEntitySet="Movimiento">
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="MovimientoID" ColumnName="MovimientoID" />
+                <ScalarProperty Name="CajeroID" ColumnName="CajeroID" />
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarjeta">
+            <EntityTypeMapping TypeName="BamexModel.Tarjeta">
+              <MappingFragment StoreEntitySet="Tarjeta">
+                <ScalarProperty Name="Fechaexpiracion" ColumnName="Fechaexpiracion" />
+                <ScalarProperty Name="Nombreentarjeta" ColumnName="Nombreentarjeta" />
+                <ScalarProperty Name="Numtarjeta" ColumnName="Numtarjeta" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="TarjetaID" ColumnName="TarjetaID" />
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

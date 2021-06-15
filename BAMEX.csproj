@@ -117,9 +117,11 @@
     <Compile Include="Model\Tarjeta.cs">
       <DependentUpon>BamexModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\AccountConsult.cs" />
     <Compile Include="Utilities\AccountStatement.cs" />
     <Compile Include="Utilities\Encrypt.cs" />
     <Compile Include="Utilities\FieldsVerificator.cs" />
+    <Compile Include="Utilities\AccountInfoForClient.cs" />
     <Compile Include="Utilities\Sesion.cs" />
     <Compile Include="Utilities\Restarter.cs" />
     <Compile Include="View\AccountsConsult.xaml.cs">
@@ -142,6 +144,9 @@
     </Compile>
     <Compile Include="View\RegisterMovement.xaml.cs">
       <DependentUpon>RegisterMovement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SelectAccount.xaml.cs">
+      <DependentUpon>SelectAccount.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AccountsConsult.xaml">
       <SubType>Designer</SubType>
@@ -187,6 +192,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RegisterMovement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SelectAccount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

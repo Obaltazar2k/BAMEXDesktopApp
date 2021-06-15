@@ -47,8 +47,8 @@ namespace BAMEX.View
                             {
                                 Concepto = ConceptTextBox.Text,
                                 Fecha = thisDay,
-                                Cuenta = account//,
-                                //Cajero = Session.User
+                                Cuenta = account,
+                                CajeroID = Sesion.GetSesion.Username
                             };
                             if ((bool)EntryRadioButton.IsChecked)
                             {

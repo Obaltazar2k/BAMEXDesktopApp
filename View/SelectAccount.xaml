@@ -1,11 +1,11 @@
-﻿<Page x:Class="BAMEX.View.AccountsConsult"
+﻿<Page x:Class="BAMEX.View.SelectAccount"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1080"
-      Title="Consultar cuentas" Background="#DBDBDB">
+      Title="Seleccionar cuenta" Background="#DBDBDB">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -100,10 +100,9 @@
                     VerticalAlignment="Stretch"
                     x:Name="AccountsList">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="No. Cliente" IsReadOnly="True" Width="*" Binding="{Binding ClientNumber}" />
-                        <DataGridTextColumn Header="Nombre" IsReadOnly="True" Width="*" Binding="{Binding Name}" />
-                        <DataGridTextColumn Header="Apellidos" IsReadOnly="True" Width="*" Binding="{Binding Sournames}" />
                         <DataGridTextColumn Header="No. Cuenta" IsReadOnly="True" Width="*" Binding="{Binding AccountNumber}" />
+                        <DataGridTextColumn Header="Saldo" IsReadOnly="True" Width="*" Binding="{Binding Balance}" />
+                        <DataGridTextColumn Header="No. Tarjeta" IsReadOnly="True" Width="*" Binding="{Binding CardNumber}" />
                         <DataGridTextColumn Header="Fecha de corte" IsReadOnly="True" Width="*" Binding="{Binding CutDate}" />
                     </DataGrid.Columns>
                     <DataGrid.Resources>
@@ -126,7 +125,7 @@
                 </DataGrid>
 
                 <Button
-                    x:Name="ConsutlMovementsButton"
+                    x:Name="GeneratAccountStatementButton"
                     Style="{DynamicResource PrimaryButton}"
                     Content="Consultar movimientos"
                     Width="185"
@@ -136,7 +135,7 @@
                     VerticalContentAlignment="Center" 
                     HorizontalAlignment="Center"
                     Margin="15"
-                    Click="ConsutlMovementsButton_Clicked">
+                    Click="GeneratAccountStatementButton_Clicked">
                 </Button>
             </Grid>
         </materialDesign:ColorZone>

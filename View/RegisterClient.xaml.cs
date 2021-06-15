@@ -1,5 +1,6 @@
 ﻿using BAMEX.Model;
 using BAMEX.Utilities;
+using System.Data.Entity.Core;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -27,24 +28,30 @@ namespace BAMEX.View
 
         private void RegistButton_Clicked(object sender, RoutedEventArgs e)
         {
-            if (VerificateFields())
+            try
             {
-                using (BamexContext context = new BamexContext())
+                if (VerificateFields())
                 {
-                    var client = context.Cliente.Find(ClientNumberTextBox.Text);
-                    if (client == null)
+                    using (BamexContext context = new BamexContext())
                     {
-                        var clientRegistered = RegistNewClient();
-                        CustomMessageBox.ShowOK("El cliente con numero: " + clientRegistered.ClienteID + " se ha registrado exitosamente", "Registro exitoso", "Aceptar");
-                        BackIcon_Clicked(new object(), new RoutedEventArgs());
-                    }
-                    else
-                    {
-                        CustomMessageBox.ShowOK("Ya existe un cliente con el numero:" + client.ClienteID, "Estudiante ya registrado", "Aceptar");
+                        var client = context.Cliente.Find(ClientNumberTextBox.Text);
+                        if (client == null)
+                        {
+                            var clientRegistered = RegistNewClient();
+                            CustomMessageBox.ShowOK("El cliente con numero: " + clientRegistered.ClienteID + " se ha registrado exitosamente", "Registro exitoso", "Aceptar");
+                            BackIcon_Clicked(new object(), new RoutedEventArgs());
+                        }
+                        else
+                        {
+                            CustomMessageBox.ShowOK("Ya existe un cliente con el numero:" + client.ClienteID, "Estudiante ya registrado", "Aceptar");
+                        }
                     }
                 }
             }
-
+            catch (EntityException)
+            {
+                Restarter.RestarBAMEX();
+            }
         }
 
         private Cliente RegistNewClient()

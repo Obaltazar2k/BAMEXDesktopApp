@@ -35,7 +35,7 @@ namespace BAMEX.View
                     {
                         SetSesion(client.ClienteID, true);
                         var mainWindow = (MainWindow)Application.Current.MainWindow;
-                        mainWindow?.ChangeView(new MainMenu());
+                        mainWindow?.ChangeView(new SelectAccount());
                         return;
                     }
                     else
@@ -50,7 +50,18 @@ namespace BAMEX.View
                         }
                         else
                         {
-                            FailedAttempt();
+                            var cashier = IsCashier();
+                            if(cashier != null)
+                            {
+                                SetSesion(cashier.CajeroID, false);
+                                var mainWindow = (MainWindow)Application.Current.MainWindow;
+                                mainWindow?.ChangeView(new MainMenu());
+                                return;
+                            }
+                            else
+                            {
+                                FailedAttempt();
+                            }
                         }
                     }
                 }
@@ -111,6 +122,20 @@ namespace BAMEX.View
                 if ((manager != null) && manager.Contrasenia == _password)
                 {
                     return manager;
+                }
+                else
+                    return null;
+            }
+        }
+
+        private Cajero IsCashier()
+        {
+            using (BamexContext context = new BamexContext())
+            {
+                var cashier = context.Cajero.FirstOrDefault(c => c.CajeroID == _user);
+                if ((cashier != null) && cashier.Contrasenia == _password)
+                {
+                    return cashier;
                 }
                 else
                     return null;

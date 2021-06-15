@@ -137,6 +137,9 @@
     <Compile Include="View\RegisterAccount.xaml.cs">
       <DependentUpon>RegisterAccount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\RegisterClient.xaml.cs">
+      <DependentUpon>RegisterClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RegisterMovement.xaml.cs">
       <DependentUpon>RegisterMovement.xaml</DependentUpon>
     </Compile>
@@ -176,6 +179,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\RegisterAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RegisterClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

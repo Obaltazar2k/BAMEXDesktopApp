@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BAMEX.Utilities;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace BAMEX.View
@@ -15,9 +16,11 @@ namespace BAMEX.View
 
         private void LogoutIcon_Clicked(object sender, RoutedEventArgs e)
         {
+            Sesion.CloseSesion();
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow?.ChangeView(new Login());
             return;
+
         }
 
         private void OpenAccountButton_Clicked(object sender, RoutedEventArgs e)

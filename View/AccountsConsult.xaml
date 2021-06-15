@@ -79,17 +79,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBox
-                    x:Name="SearchTextBox" 
-                    materialDesign:HintAssist.Hint="Búsqueda especifica"
-                    Style="{DynamicResource TextBoxAlternativeBlack}"
-                    Grid.ColumnSpan="2"
-                    VerticalContentAlignment="Stretch" 
-                    HorizontalAlignment="Stretch"
-                    Height="50"
-                    Margin="40 15 0 0">
-                </TextBox>
-
                 <DataGrid 
                     AutoGenerateColumns = "False" 
                     BorderThickness="3"

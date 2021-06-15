@@ -26,6 +26,7 @@ namespace BAMEX.View
 
         private void BackIcon_Clicked(object sender, RoutedEventArgs e)
         {
+            Sesion.CloseSesion();
             if (NavigationService.CanGoBack)
                 NavigationService.GoBack();
             else

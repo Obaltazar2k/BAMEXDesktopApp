@@ -31,7 +31,7 @@ namespace BAMEX.Utilities
 
         public static bool VerificateDecimal(string date, string field)
         {
-            Regex rgx = new Regex(@"^[0-9]$|^[0-9].[0-9]$");
+            Regex rgx = new Regex(@"^[0-9]$||^[0-9]\.[0-9]$");
             if (rgx.IsMatch(date))
                 return true;
             else

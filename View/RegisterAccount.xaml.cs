@@ -2,6 +2,7 @@
 using BAMEX.Utilities;
 using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,8 +21,16 @@ namespace BAMEX.View
         private ObservableCollection<Cliente> ClientsCollection { get; set; }
         public RegisterAccount()
         {
-            InitializeComponent();
-            fillFields();
+            try
+            {
+                InitializeComponent();
+                fillFields();
+            }
+            catch (EntityException)
+            {
+                Restarter.RestarBAMEX();
+            }
+
         }
 
         private void BackIcon_Clicked(object sender, RoutedEventArgs e)
@@ -34,41 +43,46 @@ namespace BAMEX.View
 
         private void RegistButton_Clicked(object sender, RoutedEventArgs e)
         {
-            if (VerificateFields())
+            try
             {
-                using (BamexContext context = new BamexContext())
+                if (VerificateFields())
                 {
                     RegistNewAccount();
                     CustomMessageBox.ShowOK("La cuenta se ha registrado exitosamente", "Registro exitoso", "Aceptar");
                     BackIcon_Clicked(new object(), new RoutedEventArgs());
                 }
             }
-            
+            catch (EntityException)
+            {
+                Restarter.RestarBAMEX();
+            }
+
+
         }
 
         private void RegistNewAccount()
         {
             Sesion userSesion = Sesion.GetSesion;
 
-                var selectedClient = (Cliente)ClientComboBox.SelectedItem;
-                var account = new Cuenta
-                {
-                    Fechacorte = dpCutDate.SelectedDate,
-                    Montoinicial = float.Parse(InitialAmountTextBox.Text),
-                    Saldo = float.Parse(BalanceTextBox.Text),
-                    GerenteID = userSesion.Username,
-                    CuentaID = AccountNumberTextBox.Text,
-                    ClienteID = selectedClient.ClienteID
-                };
+            var selectedClient = (Cliente)ClientComboBox.SelectedItem;
+            var account = new Cuenta
+            {
+                Fechacorte = dpCutDate.SelectedDate,
+                Montoinicial = float.Parse(InitialAmountTextBox.Text),
+                Saldo = float.Parse(BalanceTextBox.Text),
+                GerenteID = userSesion.Username,
+                CuentaID = AccountNumberTextBox.Text,
+                ClienteID = selectedClient.ClienteID
+            };
 
-                var card = new Tarjeta
-                {
-                    Fechaexpiracion = dpExpirationDate.SelectedDate,
-                    TarjetaID = CardNumberTextBox.Text,
-                    Pincode = Int32.Parse(PinTextBox.Password),
-                    CuentaID = AccountNumberTextBox.Text,
-                    Nombreentarjeta = selectedClient.Nombre + " " + selectedClient.Apellidos
-                };
+            var card = new Tarjeta
+            {
+                Fechaexpiracion = dpExpirationDate.SelectedDate,
+                TarjetaID = CardNumberTextBox.Text,
+                Pincode = Int32.Parse(PinTextBox.Password),
+                CuentaID = AccountNumberTextBox.Text,
+                Nombreentarjeta = selectedClient.Nombre + " " + selectedClient.Apellidos
+            };
 
             using (BamexContext context = new BamexContext())
             {

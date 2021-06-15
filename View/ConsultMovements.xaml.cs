@@ -27,6 +27,12 @@ namespace BAMEX.View
             InitializeComponent();
         }
 
+        public ConsultMovements(string accountNumber)
+        {
+            InitializeComponent();
+            AccountTextBox.Text = accountNumber;
+        }
+
         private void BackIcon_Clicked(object sender, RoutedEventArgs e)
         {
             if (NavigationService.CanGoBack)
@@ -102,30 +108,25 @@ namespace BAMEX.View
 
         private void ConsutlMovementsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(AccountTextBox.Text.Replace(" ", string.Empty), out _))
+            try
             {
-                try
+                using (BamexContext context = new BamexContext())
                 {
-                    using (BamexContext context = new BamexContext())
+                    var client = context.Cuenta.Find(AccountTextBox.Text.Replace(" ", string.Empty));
+                    if (client != null)
                     {
-                        var client = context.Cuenta.Find(AccountTextBox.Text.Replace(" ", string.Empty));
-                        if (client != null)
-                        {
-                            account = AccountTextBox.Text.Replace(" ", string.Empty);
-                            ChangeVisibility();
-                            GetMovements();
-                        }
-                        else
-                            CustomMessageBox.ShowOK("Número de cuenta no encontrado", "Cuenta no encontrada", "Aceptar");
+                        account = AccountTextBox.Text.Replace(" ", string.Empty);
+                        ChangeVisibility();
+                        GetMovements();
                     }
-                }
-                catch (EntityException)
-                {
-                    Restarter.RestarBAMEX();
+                    else
+                        CustomMessageBox.ShowOK("Número de cuenta no encontrado", "Cuenta no encontrada", "Aceptar");
                 }
             }
-            else
-                CustomMessageBox.ShowOK("Número de cuenta invalido", "Campos invalidos", "Aceptar");
+            catch (EntityException)
+            {
+                Restarter.RestarBAMEX();
+            }         
         }
 
         private void ChangeVisibility()

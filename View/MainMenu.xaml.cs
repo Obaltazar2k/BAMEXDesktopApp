@@ -47,5 +47,12 @@ namespace BAMEX.View
             mainWindow?.ChangeView(new ConsultMovements());
             return;
         }
+
+        private void RegistClientButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            mainWindow?.ChangeView(new RegisterClient());
+            return;
+        }
     }
 }

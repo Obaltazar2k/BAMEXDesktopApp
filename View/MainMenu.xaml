@@ -60,11 +60,24 @@
             MouseLeftButtonDown="LogoutIcon_Clicked"/>
 
         <Button
+            x:Name="RegistClientButton"
+            Style="{DynamicResource PrimaryButton}"
+            Content="Registrar cliente"
+            Width="300"
+            Grid.Column="2" Grid.Row="2"
+            Grid.ColumnSpan="2"
+            VerticalContentAlignment="Center" 
+            HorizontalAlignment="Center"
+            Margin="10"
+            Click="RegistClientButton_Clicked">
+        </Button>
+
+        <Button
             x:Name="OpenAccountButton"
             Style="{DynamicResource PrimaryButton}"
             Content="Abrir cuenta"
             Width="300"
-            Grid.Column="2" Grid.Row="2"
+            Grid.Column="2" Grid.Row="3"
             Grid.ColumnSpan="2"
             VerticalContentAlignment="Center" 
             HorizontalAlignment="Center"
@@ -78,7 +91,7 @@
             Style="{DynamicResource PrimaryButton}"
             Content="Generar estado de cuenta"
             Width="300"
-            Grid.Column="2" Grid.Row="3"
+            Grid.Column="2" Grid.Row="4"
             Grid.ColumnSpan="2"
             VerticalContentAlignment="Center" 
             HorizontalAlignment="Center"
@@ -90,7 +103,7 @@
             Style="{DynamicResource PrimaryButton}"
             Content="Consultar cuentas"
             Width="300"
-            Grid.Column="2" Grid.Row="4"
+            Grid.Column="2" Grid.Row="5"
             Grid.ColumnSpan="2"
             VerticalContentAlignment="Center" 
             HorizontalAlignment="Center"
@@ -103,7 +116,7 @@
             Style="{DynamicResource PrimaryButton}"
             Content="Registrar movimiento"
             Width="300"
-            Grid.Column="2" Grid.Row="5"
+            Grid.Column="2" Grid.Row="6"
             Grid.ColumnSpan="2"
             VerticalContentAlignment="Center" 
             HorizontalAlignment="Center"
@@ -116,7 +129,7 @@
             Style="{DynamicResource PrimaryButton}"
             Content="Consultar movimientos"
             Width="300"
-            Grid.Column="2" Grid.Row="6"
+            Grid.Column="2" Grid.Row="7"
             Grid.ColumnSpan="2"
             VerticalContentAlignment="Center" 
             HorizontalAlignment="Center"

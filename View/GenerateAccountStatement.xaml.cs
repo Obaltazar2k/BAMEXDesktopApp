@@ -18,7 +18,7 @@ namespace BAMEX.View
     public partial class GenerateAccountStatement : Page
     {
         private readonly DateTime thisDay = DateTime.Today;
-        private ObservableCollection<AccountStatement> accountStatements;
+        private ObservableCollection<AccountStatement> accountStatements = new ObservableCollection<AccountStatement>();
         private string account = null;
 
         public GenerateAccountStatement(string numberAccount)
@@ -39,44 +39,39 @@ namespace BAMEX.View
         {
             try
             {
-                if (VerificateFields())
+                using (BamexContext context = new BamexContext())
                 {
-                    using (BamexContext context = new BamexContext())
+                    var movementsList = context.Movimiento
+                        .Include(m => m.Cargo)
+                        .Include(m => m.Abono)
+                        .Where(m => m.CuentaID == account && m.Fecha >= dpInitialDate.SelectedDate && m.Fecha <= dpFinalDate.SelectedDate);
+
+                    accountStatements = new ObservableCollection<AccountStatement>();
+
+                    foreach (Movimiento movimiento in movementsList)
                     {
-                        var movementsList = context.Movimiento
-                            .Include(m => m.Cargo)
-                            .Include(m => m.Abono)
-                            .Where(m => m.CuentaID == account && m.Fecha >= dpInitialDate.SelectedDate && m.Fecha <= dpFinalDate.SelectedDate);
-
-                        accountStatements = new ObservableCollection<AccountStatement>();
-
-                        foreach (Movimiento movimiento in movementsList)
+                        var accountStatement = new AccountStatement();
+                        accountStatement.Concepto = movimiento.Concepto;
+                        accountStatement.Fecha = movimiento.Fecha;
+                        if (movimiento.Abono != null)
                         {
-                            var accountStatement = new AccountStatement();
-                            accountStatement.Concepto = movimiento.Concepto;
-                            accountStatement.Fecha = movimiento.Fecha;
-                            if (movimiento.Abono != null)
-                            {
-                                accountStatement.Monto = movimiento.Abono.Monto;
-                                accountStatement.TipoDeMovimiento = "Abono";
-                            }
-                            else if(movimiento.Cargo != null)
-                            {
-                                accountStatement.Monto = movimiento.Cargo.Monto;
-                                accountStatement.TipoDeMovimiento = "Ingreso";
-                            } /*
-                            else if(movimiento.Egreso != null)
-                            {
-                                accountStatement.Monto = movimiento.Egreso.Monto;
-                                accountStatement.TipoDeMovimiento = "Egreso";
-                            }
-                            */
-                            accountStatements.Add(accountStatement);
+                            accountStatement.Monto = movimiento.Abono.Monto;
+                            accountStatement.TipoDeMovimiento = "Abono";
                         }
-                        MovementsList.ItemsSource = accountStatements;
-                        DataContext = accountStatements;
+                        else if(movimiento.Cargo != null)
+                        {
+                            accountStatement.Monto = movimiento.Cargo.Monto;
+                            accountStatement.TipoDeMovimiento = "Ingreso";
+                        }
+                        /*else if(movimiento.Egreso != null)
+                        {
+                            accountStatement.Monto = movimiento.Egreso.Monto;
+                            accountStatement.TipoDeMovimiento = "Egreso";
+                        }*/
+                        accountStatements.Add(accountStatement);
                     }
-
+                    MovementsList.ItemsSource = accountStatements;
+                    DataContext = accountStatements;
                 }
             }
             catch (EntityException)
@@ -106,20 +101,14 @@ namespace BAMEX.View
 
         private void dpInitialDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (FieldsVerificator.VerificateDate(dpInitialDate.Text, "Fecha"))
-            {
                 accountStatements.Clear();
                 GetMovements();
-            }
         }
 
         private void dpFinalDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (FieldsVerificator.VerificateDate(dpFinalDate.Text, "Fecha"))
-            {
                 accountStatements.Clear();
                 GetMovements();
-            }
         }
     }
 }

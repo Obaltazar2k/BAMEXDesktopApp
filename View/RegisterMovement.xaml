@@ -70,14 +70,29 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="100"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
+                <TextBox
+                    x:Name="AccountTextBox" 
+                    materialDesign:HintAssist.Hint="Número de cuenta"
+                    Style="{DynamicResource TextBoxAlternativeBlack}"
+                    Grid.ColumnSpan="2"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    KeyDown="AccountTextBox_KeyDown"
+                    VerticalContentAlignment="Bottom" 
+                    HorizontalAlignment="Stretch"
+                    Height="50"
+                    MaxLength="20"
+                    Margin="0 20 35 0">
+                </TextBox>
 
                 <TextBox
                     x:Name="ConceptTextBox" 
@@ -86,10 +101,10 @@
                     Grid.ColumnSpan="2"
                     Grid.Column="1"
                     Grid.Row="1"
-                    VerticalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Bottom" 
                     HorizontalAlignment="Stretch"
                     Height="50"
-                    Margin="0 20 0 0">
+                    Margin="0 20 35 0">
                 </TextBox>
 
                 <TextBox
@@ -97,7 +112,8 @@
                     materialDesign:HintAssist.Hint="Cantidad"
                     Style="{DynamicResource TextBoxAlternativeBlack}"
                     Grid.Column="1" Grid.Row="2"
-                    VerticalContentAlignment="Stretch" 
+                    KeyDown="AmountTextBox_KeyDown"
+                    VerticalContentAlignment="Bottom" 
                     HorizontalAlignment="Left"
                     Height="50"
                     Width="220"
@@ -109,11 +125,12 @@
                     materialDesign:HintAssist.Hint="Fecha"
                     Style="{DynamicResource TextBoxAlternativeBlack}"
                     Grid.Column="2" Grid.Row="2"
-                    VerticalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Bottom" 
                     HorizontalAlignment="Left"
                     Height="50"
                     Width="220"
-                    Margin="5">
+                    Margin="5"
+                    IsReadOnly="True">
                 </TextBox>
 
                 <RadioButton
@@ -157,7 +174,6 @@
 
                 <Button
                     x:Name="RegistButton"
-                    Style="{DynamicResource PrimaryButton}"
                     Content="Registrar"
                     Width="170"
                     Grid.Column="1" Grid.Row="5"
@@ -166,6 +182,27 @@
                     HorizontalAlignment="Center"
                     Margin="10"
                     Click="RegistButton_Clicked">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedAccentButton}">
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Foreground" Value="#FFF5F5"/>
+                            <Setter Property="Background" Value="#D22828"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="10"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text.Length, ElementName=ConceptTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Text.Length, ElementName=AccountTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Text.Length, ElementName=DateTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
             </Grid>
         </materialDesign:ColorZone>

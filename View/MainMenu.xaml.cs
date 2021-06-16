@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BAMEX.Utilities;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace BAMEX.View
@@ -15,22 +16,17 @@ namespace BAMEX.View
 
         private void LogoutIcon_Clicked(object sender, RoutedEventArgs e)
         {
+            Sesion.CloseSesion();
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow?.ChangeView(new Login());
             return;
+
         }
 
         private void OpenAccountButton_Clicked(object sender, RoutedEventArgs e)
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow?.ChangeView(new RegisterAccount());
-            return;
-        }
-
-        private void GenerateStateAccountButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow?.ChangeView(new GenerateAccountStatement());
             return;
         }
 
@@ -52,6 +48,13 @@ namespace BAMEX.View
         {
             var mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow?.ChangeView(new ConsultMovements());
+            return;
+        }
+
+        private void RegistClientButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = (MainWindow)Application.Current.MainWindow;
+            mainWindow?.ChangeView(new RegisterClient());
             return;
         }
     }

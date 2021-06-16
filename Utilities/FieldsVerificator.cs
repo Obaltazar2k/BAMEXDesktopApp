@@ -28,5 +28,17 @@ namespace BAMEX.Utilities
                 return false;
             }
         }
+
+        public static bool VerificateDecimal(string date, string field)
+        {
+            Regex rgx = new Regex(@"^[0-9]$||^[0-9]\.[0-9]$");
+            if (rgx.IsMatch(date))
+                return true;
+            else
+            {
+                CustomMessageBox.ShowOK("Asegurese de que el campo '" + field + "' contenga unicamente valores numericos enteros o decimales", "Error fecha inválido", "Aceptar");
+                return false;
+            }
+        }
     }
 }

@@ -73,7 +73,7 @@ GO
 CREATE TABLE [Abono]
 (
 	[Monto] float NULL,
-	[AbonoID] int NOT NULL IDENTITY (1, 1)
+	[AbonoID] int NOT NULL
 )
 GO
 
@@ -90,7 +90,7 @@ CREATE TABLE [Cargo]
 (
 	[Interes] float NULL,
 	[Monto] float NULL,
-	[CargoID] int NOT NULL IDENTITY (1, 1)
+	[CargoID] int NOT NULL
 )
 GO
 

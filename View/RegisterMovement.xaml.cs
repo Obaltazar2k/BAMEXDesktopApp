@@ -44,7 +44,12 @@ namespace BAMEX.View
                     {
                         using (BamexContext context = new BamexContext())
                         {
-                            var account = context.Cuenta.Find(AccountTextBox.Text.Replace(" ", string.Empty));
+                            var account = context.Cuenta.Find(AccountTextBox.Text);
+                            if (account == null)
+                            {
+                                CustomMessageBox.Show("Cuenta no encontrada");
+                                return;
+                            }
                             var movement = new Movimiento
                             {
                                 Concepto = ConceptTextBox.Text,
@@ -52,40 +57,34 @@ namespace BAMEX.View
                                 Cuenta = account,
                                 CajeroID = Sesion.GetSesion.Username
                             };
+                            context.Movimiento.Add(movement);
+                            context.SaveChanges();
                             if ((bool)EntryRadioButton.IsChecked)
                             {
-                                movement.Cargo = new Cargo
+                                var cargo = new Cargo
                                 {
                                     Monto = double.Parse(AmountTextBox.Text),
-                                    Movimiento = movement
+                                    CargoID = movement.MovimientoID
                                 };
-                                account.Saldo += movement.Cargo.Monto;
+                                account.Saldo += cargo.Monto;
+                                context.Cargo.Add(cargo);
+                                context.SaveChanges();
                             }
                             else if ((bool)PayRadioButton.IsChecked)
                             {
-                                movement.Abono = new Abono()
+                                var abono = new Abono()
                                 {
                                     Monto = double.Parse(AmountTextBox.Text),
-                                    Movimiento = movement
+                                    AbonoID = movement.MovimientoID
                                 };
-                                account.Saldo += movement.Abono.Monto;
-                                context.Abono.Add(movement.Abono);
+                                account.Saldo += abono.Monto;
+                                context.Abono.Add(abono);
+                                context.SaveChanges();
                             }
                             else if ((bool)EgressRadioButton.IsChecked)
                             {
                                 account.Saldo -= float.Parse(AmountTextBox.Text);
                             }
-
-                            var registMovement = new Movimiento
-                            {
-                                Concepto = movement.Concepto,
-                                Fecha = movement.Fecha,
-                                CajeroID = movement.CajeroID,
-                                CuentaID = AccountTextBox.Text
-                            };
-
-                            context.Movimiento.Add(registMovement);
-                            context.SaveChanges();
 
                             CustomMessageBox.ShowOK("Se ha registrado el movimiento con éxito", "Éxito", "Aceptar");
                             AccountTextBox.Clear();

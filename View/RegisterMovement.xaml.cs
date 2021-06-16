@@ -16,6 +16,7 @@ namespace BAMEX.View
     public partial class RegisterMovement : Page
     {
         private readonly DateTime thisDay = DateTime.Today;
+        Sesion userSesion = Sesion.GetSesion;
 
         public RegisterMovement()
         {
@@ -25,6 +26,7 @@ namespace BAMEX.View
 
         private void BackIcon_Clicked(object sender, RoutedEventArgs e)
         {
+            Sesion.CloseSesion();
             if (NavigationService.CanGoBack)
                 NavigationService.GoBack();
             else
@@ -67,17 +69,28 @@ namespace BAMEX.View
                                     Movimiento = movement
                                 };
                                 account.Saldo += movement.Abono.Monto;
+                                context.Abono.Add(movement.Abono);
                             }
                             else if ((bool)EgressRadioButton.IsChecked)
                             {
-                                throw new NotImplementedException();
-                                //account.Saldo -= movement.Egreso.Monto;
+                                account.Saldo -= float.Parse(AmountTextBox.Text);
                             }
 
-                            context.Movimiento.Add(movement);
+                            var registMovement = new Movimiento
+                            {
+                                Concepto = movement.Concepto,
+                                Fecha = movement.Fecha,
+                                CajeroID = movement.CajeroID,
+                                CuentaID = AccountTextBox.Text
+                            };
+
+                            context.Movimiento.Add(registMovement);
                             context.SaveChanges();
 
                             CustomMessageBox.ShowOK("Se ha registrado el movimiento con éxito", "Éxito", "Aceptar");
+                            AccountTextBox.Clear();
+                            ConceptTextBox.Clear();
+                            AmountTextBox.Clear();
                         }
                     }
                     else
@@ -92,8 +105,7 @@ namespace BAMEX.View
 
         private bool VerificateFields()
         {
-            return VerificateAccount() &&
-                VerificateAmount();
+            return VerificateAmount();
         }
 
         private bool VerificateAmount()
@@ -105,31 +117,6 @@ namespace BAMEX.View
                 CustomMessageBox.ShowOK("Cantidad invalida", "Campos invalidos", "Aceptar");
                 return false;
             }
-        }
-
-        private bool VerificateAccount()
-        {
-            if (int.TryParse(AccountTextBox.Text.Replace(" ", string.Empty), out _))
-            {
-                try
-                {
-                    using (BamexContext context = new BamexContext())
-                    {
-                        var client = context.Cuenta.Find(AccountTextBox.Text.Replace(" ", string.Empty));
-                        if (client != null)
-                            return true;
-                        else
-                            CustomMessageBox.ShowOK("Número de cuenta no encontrado", "Cuenta no encontrada", "Aceptar");
-                    }
-                }
-                catch (EntityException)
-                {
-                    Restarter.RestarBAMEX();
-                }
-            }
-            else
-                CustomMessageBox.ShowOK("Número de cuenta invalido", "Campos invalidos", "Aceptar");
-            return false;
         }
 
         private void AmountTextBox_KeyDown(object sender, KeyEventArgs e)

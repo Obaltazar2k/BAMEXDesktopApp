@@ -60,45 +60,42 @@ namespace BAMEX.View
         {
             try
             {
-                if (VerificateFields())
+                using (BamexContext context = new BamexContext())
                 {
-                    using (BamexContext context = new BamexContext())
+                    var movementsList = context.Movimiento
+                        .Include(m => m.Cargo)
+                        .Include(m => m.Abono)
+                        .Where(m => m.CuentaID == account && m.Fecha == dpSearchDate.SelectedDate);
+
+                    accountStatements = new ObservableCollection<AccountStatement>();
+
+                    foreach (Movimiento movimiento in movementsList)
                     {
-                        var movementsList = context.Movimiento
-                            .Include(m => m.Cargo)
-                            .Include(m => m.Abono)
-                            .Where(m => m.CuentaID == account && m.Fecha == dpSearchDate.SelectedDate);
-
-                        accountStatements = new ObservableCollection<AccountStatement>();
-
-                        foreach (Movimiento movimiento in movementsList)
+                        var accountStatement = new AccountStatement();
+                        accountStatement.Concepto = movimiento.Concepto;
+                        accountStatement.Fecha = movimiento.Fecha;
+                        if (movimiento.Abono != null)
                         {
-                            var accountStatement = new AccountStatement();
-                            accountStatement.Concepto = movimiento.Concepto;
-                            accountStatement.Fecha = movimiento.Fecha;
-                            if (movimiento.Abono != null)
-                            {
-                                accountStatement.Monto = movimiento.Abono.Monto;
-                                accountStatement.TipoDeMovimiento = "Abono";
-                            }
-                            else if (movimiento.Cargo != null)
-                            {
-                                accountStatement.Monto = movimiento.Cargo.Monto;
-                                accountStatement.TipoDeMovimiento = "Ingreso";
-                            } /*
-                            else if(movimiento.Egreso != null)
-                            {
-                                accountStatement.Monto = movimiento.Egreso.Monto;
-                                accountStatement.TipoDeMovimiento = "Egreso";
-                            }
-                            */
-                            accountStatements.Add(accountStatement);
+                            accountStatement.Monto = movimiento.Abono.Monto;
+                            accountStatement.TipoDeMovimiento = "Abono";
                         }
-                        MovementsList.ItemsSource = accountStatements;
-                        DataContext = accountStatements;
+                        else if (movimiento.Cargo != null)
+                        {
+                            accountStatement.Monto = movimiento.Cargo.Monto;
+                            accountStatement.TipoDeMovimiento = "Ingreso";
+                        } /*
+                        else if(movimiento.Egreso != null)
+                        {
+                            accountStatement.Monto = movimiento.Egreso.Monto;
+                            accountStatement.TipoDeMovimiento = "Egreso";
+                        }
+                        */
+                        accountStatements.Add(accountStatement);
                     }
-
+                    MovementsList.ItemsSource = accountStatements;
+                    DataContext = accountStatements;
                 }
+
             }
             catch (EntityException)
             {

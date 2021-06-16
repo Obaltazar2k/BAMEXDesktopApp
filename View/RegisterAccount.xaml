@@ -143,6 +143,7 @@
                             VerticalContentAlignment="Stretch" 
                             HorizontalAlignment="Stretch"
                             Height="50"
+                            IsReadOnly="True"
                             KeyDown="NumbersTextBox_KeyDown"
                             MaxLength="20"
                             Margin="5">
@@ -158,6 +159,7 @@
                             VerticalContentAlignment="Stretch" 
                             HorizontalAlignment="Stretch"
                             Height="50"
+                            IsReadOnly="True"
                             KeyDown="NumbersTextBox_KeyDown"
                             MaxLength="16"
                             Margin="5">
@@ -172,6 +174,7 @@
                             HorizontalAlignment="Left"
                             Height="50"
                             Width="220"
+                            IsReadOnly="True"
                             KeyDown="NumbersTextBox_KeyDown"
                             MaxLength="3"
                             Margin="5">

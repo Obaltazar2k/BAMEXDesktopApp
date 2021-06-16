@@ -127,8 +127,8 @@
                 <Button
                     x:Name="GeneratAccountStatementButton"
                     Style="{DynamicResource PrimaryButton}"
-                    Content="Consultar movimientos"
-                    Width="185"
+                    Content="Consultar estado de cuenta"
+                    Width="225"
                     Grid.Column="1" Grid.Row="7"
                     IsEnabled="False"
                     Grid.ColumnSpan="2"

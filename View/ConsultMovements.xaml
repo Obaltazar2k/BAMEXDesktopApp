@@ -105,14 +105,15 @@
                     Width="220" Margin="30 10 0 0" 
                     HorizontalAlignment="Left">
                             <DatePicker
+                                SelectedDate="06/15/2021"
                                 SelectedDateChanged="dpSearchDate_SelectedDateChanged"
-                        x:Name="dpSearchDate"
-                        materialDesign:HintAssist.Hint="Búsqueda por fecha"
-                        materialDesign:HintAssist.Foreground="#D22828"
-                        materialDesign:HintAssist.IsFloating="True"
-                        Foreground="Black"
-                        BorderBrush="#B5B4B4"
-                        Height="50">
+                                x:Name="dpSearchDate"
+                                materialDesign:HintAssist.Hint="Búsqueda por fecha"
+                                materialDesign:HintAssist.Foreground="#D22828"
+                                materialDesign:HintAssist.IsFloating="True"
+                                Foreground="Black"
+                                BorderBrush="#B5B4B4"
+                                Height="50">
                                 <DatePicker.Resources>
                                     <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#D22828" />
                                 </DatePicker.Resources>
@@ -141,9 +142,9 @@
                     x:Name="MovementsList">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Fecha" IsReadOnly="True" Width="*" Binding="{Binding Fecha}" />
-                                <DataGridTextColumn Header="Ingreso/Egreso" IsReadOnly="True" Width="*" Binding="{Binding IngresoEgreso}" />
+                                <DataGridTextColumn Header="Tipo de movimiento" IsReadOnly="True" Width="*" Binding="{Binding TipoDeMovimiento}" />
                                 <DataGridTextColumn Header="Cantidad" IsReadOnly="True" Width="*" Binding="{Binding Cantidad}" />
-                                <DataGridTextColumn Header="Descripción" IsReadOnly="True" Width="*" Binding="{Binding Descripcion}" />
+                                <DataGridTextColumn Header="Concepto" IsReadOnly="True" Width="*" Binding="{Binding Concepto}" />
                             </DataGrid.Columns>
                             <DataGrid.Resources>
                                 <Style TargetType="DataGridCell">

@@ -55,7 +55,7 @@ namespace BAMEX.View
                             {
                                 SetSesion(cashier.CajeroID, false);
                                 var mainWindow = (MainWindow)Application.Current.MainWindow;
-                                mainWindow?.ChangeView(new MainMenu());
+                                mainWindow?.ChangeView(new RegisterMovement());
                                 return;
                             }
                             else
